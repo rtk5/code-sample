@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Compliance Report — billing_service.py</title>
+    <style>
+        body { font-family: monospace; background: #0f172a; color: #e2e8f0; padding: 40px; }
+        h1   { color: #f8fafc; border-bottom: 1px solid #334155; padding-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <h1>📋 Compliance Report</h1>
+    <p style="color:#94a3b8">File: <b style="color:#e2e8f0">billing_service.py</b></p>
+    <div style="display:flex;gap:24px;margin:20px 0;padding:20px;background:#1e293b;border-radius:8px;border:1px solid #334155">
+        <div><div style="font-size:28px;font-weight:bold;color:#f8fafc">3</div><div style="color:#94a3b8;font-size:13px">Chunks analyzed</div></div>
+        <div><div style="font-size:28px;font-weight:bold;color:#ef4444">3</div><div style="color:#94a3b8;font-size:13px">Violations</div></div>
+        <div><div style="font-size:28px;font-weight:bold;color:#f59e0b">0</div><div style="color:#94a3b8;font-size:13px">Critical</div></div>
+        <div><div style="font-size:28px;font-weight:bold;color:#22c55e">0%</div><div style="color:#94a3b8;font-size:13px">Compliance rate</div></div>
+    </div>
+    
+        <div style="border:1px solid #334155;border-radius:8px;padding:20px;margin-bottom:16px;background:#1e293b">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+                <span style="color:#ef4444;font-weight:bold;font-size:16px">❌ VIOLATION</span>
+                <span style="background:#fbbf24;color:#1f2937;padding:2px 8px;border-radius:4px;font-size:12px">MEDIUM</span>
+                <span style="color:#e2e8f0;font-weight:bold">— apply_discount</span>
+            </div>
+            <p style="color:#94a3b8;font-size:13px;margin:4px 0"><b style="color:#cbd5e1">Summary:</b> This code applies a flat discount to an order by updating the order's total in the database. It accesses the database directly to update the order using an SQL query, modifying the order's total based on a predefined `DISCOUNT_RATE`. The function takes in an `order_id` and the original `amount`, then returns the discounted amount after updating the database.</p>
+            <p style="color:#94a3b8;font-size:13px;margin:4px 0"><b style="color:#cbd5e1">Reasoning:</b> The provided code violates Policy 1 by using a hardcoded discount rate (DISCOUNT_RATE). Additionally, the code directly accesses the database, but since Policy 3 and Policy 7 are related to accessing PII data and employee salary records respectively, and there is no mention of such data in the provided code, these policies are not violated in this specific code chunk. However, the use of a direct DB query may still pose a risk and should be reviewed for compliance with other policies not mentioned here.</p>
+            <div style="margin-top:10px">
+                <b style="color:#cbd5e1;font-size:13px">Violations:</b>
+                <ul style="margin:4px 0 0 16px"><li style="color:#ef4444">⚠️ Policy 1: Hardcoded discount rate</li></ul>
+            </div>
+            <div style="margin-top:10px">
+                <b style="color:#cbd5e1;font-size:13px">Policies retrieved:</b>
+                <ul style="margin:4px 0 0 16px"><li style="color:#94a3b8;font-size:12px">Policy 1: All discount logic must be approved by a finance manager before deployment. Hardcoded disc...</li><li style="color:#94a3b8;font-size:12px">Policy 3: Customer PII data must never be accessed outside the CustomerDataService class....</li><li style="color:#94a3b8;font-size:12px">Policy 7: Only HR systems may access employee salary records. No direct DB queries on the employee t...</li></ul>
+            </div>
+        </div>
+        <div style="border:1px solid #334155;border-radius:8px;padding:20px;margin-bottom:16px;background:#1e293b">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+                <span style="color:#ef4444;font-weight:bold;font-size:16px">❌ VIOLATION</span>
+                <span style="background:#fbbf24;color:#1f2937;padding:2px 8px;border-radius:4px;font-size:12px">HIGH</span>
+                <span style="color:#e2e8f0;font-weight:bold">— get_customer_emails</span>
+            </div>
+            <p style="color:#94a3b8;font-size:13px;margin:4px 0"><b style="color:#cbd5e1">Summary:</b> This code retrieves customer email addresses from a database where the customers have opted-in to receive marketing communications. It then passes the retrieved data to the `send_bulk_email` function, which presumably sends a bulk email to the selected customers using a specified template. The code interacts with the database for data access and makes an external call to the `send_bulk_email` function to perform the email sending operation.</p>
+            <p style="color:#94a3b8;font-size:13px;margin:4px 0"><b style="color:#cbd5e1">Reasoning:</b> The provided code directly accesses customer PII data (emails) from the database, violating Policy 3. Additionally, it does not route the marketing emails through the CommunicationsGateway as required by Policy 4, and there is no visible check for opt-out flags in the given code chunk.</p>
+            <div style="margin-top:10px">
+                <b style="color:#cbd5e1;font-size:13px">Violations:</b>
+                <ul style="margin:4px 0 0 16px"><li style="color:#ef4444">⚠️ Policy 3: Customer PII data must never be accessed outside the CustomerDataService class.</li><li style="color:#ef4444">⚠️ Policy 4: All marketing emails must route through the CommunicationsGateway and respect opt-out flags.</li></ul>
+            </div>
+            <div style="margin-top:10px">
+                <b style="color:#cbd5e1;font-size:13px">Policies retrieved:</b>
+                <ul style="margin:4px 0 0 16px"><li style="color:#94a3b8;font-size:12px">Policy 4: All marketing emails must route through the CommunicationsGateway and respect opt-out flag...</li><li style="color:#94a3b8;font-size:12px">Policy 3: Customer PII data must never be accessed outside the CustomerDataService class....</li><li style="color:#94a3b8;font-size:12px">Policy 6: Customer behavioral data must not be used for analytics without explicit consent flags bei...</li></ul>
+            </div>
+        </div>
+        <div style="border:1px solid #334155;border-radius:8px;padding:20px;margin-bottom:16px;background:#1e293b">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+                <span style="color:#ef4444;font-weight:bold;font-size:16px">❌ VIOLATION</span>
+                <span style="background:#fbbf24;color:#1f2937;padding:2px 8px;border-radius:4px;font-size:12px">HIGH</span>
+                <span style="color:#e2e8f0;font-weight:bold">— process_payment</span>
+            </div>
+            <p style="color:#94a3b8;font-size:13px;margin:4px 0"><b style="color:#cbd5e1">Summary:</b> This code processes a payment by charging a specified amount using an unapproved vendor's SDK and then updates the payment status to 'done' in the database. The business logic is straightforward, but the use of an unapproved vendor's SDK poses a risk. The code accesses the database directly to update the payment status, but it does not track any audit logs, and the external call to the vendor's SDK is not validated or secured.</p>
+            <p style="color:#94a3b8;font-size:13px;margin:4px 0"><b style="color:#cbd5e1">Reasoning:</b> The code violates policy 10 by using an unapproved vendor's SDK. Additionally, it bypasses the approval_workflow service by directly updating the payment status in the database, violating policy 2. The lack of audit logging and validation for the external call to the vendor's SDK also poses a risk, but it does not explicitly violate any of the provided policies.</p>
+            <div style="margin-top:10px">
+                <b style="color:#cbd5e1;font-size:13px">Violations:</b>
+                <ul style="margin:4px 0 0 16px"><li style="color:#ef4444">⚠️ Policy 10: Third-party vendor SDKs must be listed in approved_vendors.json before use</li><li style="color:#ef4444">⚠️ Policy 2: No code may bypass the approval_workflow service. All state changes must go through the workflow engine</li></ul>
+            </div>
+            <div style="margin-top:10px">
+                <b style="color:#cbd5e1;font-size:13px">Policies retrieved:</b>
+                <ul style="margin:4px 0 0 16px"><li style="color:#94a3b8;font-size:12px">Policy 10: Third-party vendor SDKs must be listed in approved_vendors.json before use....</li><li style="color:#94a3b8;font-size:12px">Policy 1: All discount logic must be approved by a finance manager before deployment. Hardcoded disc...</li><li style="color:#94a3b8;font-size:12px">Policy 2: No code may bypass the approval_workflow service. All state changes must go through the wo...</li></ul>
+            </div>
+        </div>
+</body>
+</html>
